@@ -16,29 +16,74 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
+// Basket services 
+ 
+app.MapPost("/AddItemToBasket", (string username, int catalogItemId, decimal price, int quantity) =>
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
+    return $"AddItemToBasket called with username: {username}, catalogItemId: {catalogItemId}, price: {price}, quantity: {quantity}";
 })
-.WithName("GetWeatherForecast")
-.WithOpenApi();
+.WithName("AddItemToBasket")
+.WithOpenApi()
+.WithTags("Basket Services");
+
+app.MapDelete("/DeleteBasketAsync", (int basketId) =>
+{
+    return $"DeleteBasketAsync called with basketId: {basketId}";
+})
+.WithName("DeleteBasketAsync")
+.WithOpenApi()
+.WithTags("Basket Services");
+
+app.MapPut("/SetQuantities", (int basketId, Dictionary<string, int> quantities) =>
+{
+    return $"SetQuantities called with basketId: {basketId}, quantities: {quantities}";
+})
+.WithName("SetQuantities")
+.WithOpenApi()
+.WithTags("Basket Services");
+
+app.MapGet("/TransferBasketAsync", (string anonymousId, string userName) =>
+{
+    return $"TransferBasketAsync called with anonymousId: {anonymousId}, userName: {userName}";
+})
+.WithName("TransferBasketAsync")
+.WithOpenApi()
+.WithTags("Basket Services");
+
+// Basket View Model services
+
+app.MapGet("/GetOrCreateBasketForUser", (string userName) =>
+{
+    return $"GetOrCreateBasketForUser called with userName: {userName}";
+})
+.WithName("GetOrCreateBasketForUser")
+.WithOpenApi()
+.WithTags("Basket View Model Services");
+
+
+app.MapPost("/CreateBasketForUser", (string userId) =>
+{
+    return $"CreateBasketForUser called with userId: {userId}";
+})
+.WithName("CreateBasketForUser")
+.WithOpenApi()
+.WithTags("Basket View Model Services");
+
+// string == BasketItem
+app.MapGet("/GetBasketItems", (IReadOnlyCollection<string> basketItems) =>
+{
+    return $"GetBasketItems called with basketItems: {basketItems}";
+})
+.WithName("GetBasketItems")
+.WithOpenApi()
+.WithTags("Basket View Model Services");
+
+app.MapGet("/CountTotalBasketItems", (string username) =>
+{
+    return $"CountTotalBasketItems called with username: {username}";
+})
+.WithName("CountTotalBasketItems")
+.WithOpenApi()
+.WithTags("Basket View Model Services");
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
