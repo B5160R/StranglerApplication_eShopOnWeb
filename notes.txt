@@ -17,7 +17,7 @@ Catalog Context:
 Payment Context:
   Entities: Payment, Transaction
   Services: PaymentService
-  Operations: ProcessPayment, RefundPayment
+  Operations: ProcessPayment
 
 User Management Context:
   Entities: User, Role
