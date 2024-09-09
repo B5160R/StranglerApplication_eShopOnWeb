@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 namespace Catalog.Api.Endpoints;
 public class GetCatalogListEndpoint : Endpoint<GetCatalogListRequest, GetCatalogListResponse>
 {
+
   public override void Configure()
   {
     Get("/GetCatalogList");
