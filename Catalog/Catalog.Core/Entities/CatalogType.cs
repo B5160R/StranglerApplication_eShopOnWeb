@@ -1,18 +1,14 @@
-﻿using Catalog.Core.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Catalog.Core.Interfaces;
 
-namespace Catalog.Core.Entities
+namespace Catalog.Core.Entities;
+
+public partial class CatalogType : IAggregateRoot
 {
-  public class CatalogType : BaseEntity, IAggregateRoot
-  {
-    public string Type { get; private set; }
-    public CatalogType(string type)
-    {
-      Type = type;
-    }
-  }
+    [Key]
+    public int Id { get; set; }
+
+    public string? TypeName { get; set; }
 }
