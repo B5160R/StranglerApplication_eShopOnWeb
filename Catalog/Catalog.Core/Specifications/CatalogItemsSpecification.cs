@@ -1,10 +1,6 @@
 ﻿using Catalog.Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Ardalis.Specification;
+using System.Linq;
 
 namespace Catalog.Core.Specifications
 {
@@ -12,7 +8,7 @@ namespace Catalog.Core.Specifications
   {
     public CatalogItemsSpecification(params int[] ids)
     {
-      Query.Where(c => ids.Contains(c.Id));
+     // Query.Where(c => ids.Contains(c.Id));
     }
   }
 }
