@@ -6,16 +6,17 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace Catalog.Api.Endpoints;
+
 public class GetCatalogListEndpoint : Endpoint<GetCatalogListRequest, GetCatalogListResponse>
 {
   private readonly IRepository<CatalogItem> _itemRepository;
 
-    public GetCatalogListEndpoint(IRepository<CatalogItem> itemRepository)
-    {
-        _itemRepository = itemRepository;
-    }
+  public GetCatalogListEndpoint(IRepository<CatalogItem> itemRepository)
+  {
+    _itemRepository = itemRepository;
+  }
 
-    public override void Configure()
+  public override void Configure()
   {
     Get("/GetCatalogList");
     AllowAnonymous();
@@ -26,12 +27,6 @@ public class GetCatalogListEndpoint : Endpoint<GetCatalogListRequest, GetCatalog
     var result = await _itemRepository.GetAllAsync();
     var response = new GetCatalogListResponse { CatalogList = result.Select(x => x.Name).ToArray() };
     await SendAsync(response);
-  }
-
-  //placeholder for actual implementation
-  private Task<GetCatalogListResponse> GetCatalogListAsync()
-  {
-    return Task.FromResult(new GetCatalogListResponse { CatalogList = new[] { "Item1", "Item2" } });
   }
 }
 

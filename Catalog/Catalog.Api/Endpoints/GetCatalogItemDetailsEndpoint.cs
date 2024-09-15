@@ -26,7 +26,8 @@ public class GetCatalogItemDetailsEndpoint : Endpoint<GetCatalogItemDetailsReque
     {
         var result = await _itemRepository.GetByIdAsync(request.Id);
 
-        var response = new GetCatalogItemDetailsResponse { 
+        var response = new GetCatalogItemDetailsResponse
+        {
             Name = result.Name,
             Description = result.Description
         };
