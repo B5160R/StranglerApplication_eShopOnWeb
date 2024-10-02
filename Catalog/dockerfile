@@ -12,9 +12,11 @@ COPY . .
 
 WORKDIR "/src/Catalog.Api"
 
-RUN dotnet build "Catalog.Api.csproj" -c Release -o /app/build
+ARG CONFIGURATION=Release
 
-RUN dotnet publish "Catalog.Api.csproj" -c Release -o /app/publish
+RUN dotnet build "Catalog.Api.csproj" -c $CONFIGURATION -o /app/build
+
+RUN dotnet publish "Catalog.Api.csproj" -c $CONFIGURATION -o /app/publish
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
 WORKDIR /app

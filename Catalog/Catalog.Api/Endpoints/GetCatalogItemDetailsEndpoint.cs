@@ -7,15 +7,9 @@ using Catalog.Core.Entities;
 using Catalog.Core.Interfaces;
 
 namespace Catalog.Api.Endpoints;
-public class GetCatalogItemDetailsEndpoint : Endpoint<GetCatalogItemDetailsRequest, CatalogItem>
+public class GetCatalogItemDetailsEndpoint(IGetCatalogService getCatalogService) 
+: Endpoint<GetCatalogItemDetailsRequest, GetCatalogItemDetailsResponse>
 {
-    private readonly IRepository<CatalogItem> _itemRepository;
-
-    public GetCatalogItemDetailsEndpoint(IRepository<CatalogItem> itemRepository)
-    {
-        _itemRepository = itemRepository;
-    }
-
     public override void Configure()
     {
         Get("/GetCatalogItemDetails");
@@ -24,7 +18,7 @@ public class GetCatalogItemDetailsEndpoint : Endpoint<GetCatalogItemDetailsReque
 
     public override async Task HandleAsync(GetCatalogItemDetailsRequest request, CancellationToken cancellationToken)
     {
-        var result = await _itemRepository.GetByIdAsync(request.Id);
+        var result = await getCatalogService.GetCatalogItemAsync(request.Id);
 
         var response = new GetCatalogItemDetailsResponse
         {
@@ -32,9 +26,8 @@ public class GetCatalogItemDetailsEndpoint : Endpoint<GetCatalogItemDetailsReque
             Description = result.Description
         };
 
-        await SendAsync(result);
+        await SendAsync(response);
     }
-
 }
 
 public class GetCatalogItemDetailsRequest
