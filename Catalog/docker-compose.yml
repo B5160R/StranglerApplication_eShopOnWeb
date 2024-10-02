@@ -12,7 +12,7 @@ services:
     ports:
       - 8080:8080
     environment:
-      ConnectionStrings__CatalogDb: "Server=catalog-db-mssql;Database=CatalogDb;User Id=sa;Password=supersecretpassword;"
+      ConnectionStrings__CatalogDb: "Server=catalog-db-mssql;Database=CatalogDb;User Id=sa;Password=Super.secretpa55word;"
       
   mssql-db:
     container_name: catalog-db-mssql
@@ -27,5 +27,5 @@ services:
       - ./MigrateData/database_script.sql:/scripts/database_script.sql
     environment:
       ACCEPT_EULA: y
-      MSSQL_SA_PASSWORD: supersecretpassword
-    command: /bin/bash -c "sleep 5s && /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P supersecretpassword -i /scripts/database_script.sql"
+      MSSQL_SA_PASSWORD: Super.secretpa55word
+    command: /bin/bash -c "sleep 5s && /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P Super.secretpa55word -i /scripts/database_script.sql"
